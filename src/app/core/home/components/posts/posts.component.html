@@ -1,0 +1,17 @@
+<div>
+  @if(isPostsLoading){ loading.... }
+  @else if (posts) { @for (post of posts; track post) {
+  <div>
+    <p>{{ user.username }}</p>
+    <img [src]="user.userImage" [alt]="user.username">
+    <p>{{ post.title }}</p>
+    <p>{{ post.body | limitTo : 50 }}</p>
+    <img [src]="postImage" [alt]="post.title">
+    <button (click)="loadComments(post.id)">comments</button>
+    @if (selectedPostId === post.id) {
+      <app-comments [postId]="selectedPostId"></app-comments>
+      }
+  </div>
+  }
+}
+</div>

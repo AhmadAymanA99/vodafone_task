@@ -1,0 +1,12 @@
+<nav class="nav">
+  @if (users) {
+  <div>
+    @for (user of users; track user) {
+    <button (click)="loadPosts(user.id,user.username)">{{ user.username }}</button>
+    }
+  </div>
+
+  @if (selectedUser) {
+  <app-posts [user]="selectedUser"></app-posts>
+  } } @if (isUserLoading) { loading.... }
+</nav>

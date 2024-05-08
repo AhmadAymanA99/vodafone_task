@@ -1,0 +1,11 @@
+<div>
+  @if(isCommentLoading){ loading.... }
+  @else if (commentsData) { @for (comment of commentsData; track comment) {
+  <div>
+   <p>{{comment.body}}</p>
+  </div>
+  }
+}
+</div>
+
+
