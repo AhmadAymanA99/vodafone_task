@@ -18,7 +18,7 @@ export class PostsComponent implements OnChanges {
   postImage: string =
     'https://images.unsplash.com/photo-1714547509046-0cf60126f331?q=80&w=3864&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
   posts: Post[] = [];
-  selectedPostId!: number;
+  selectedPostId: number[] = [];
 
   constructor(private postService: PostService) {}
 
@@ -28,6 +28,15 @@ export class PostsComponent implements OnChanges {
     )
       return;
     const userId = changes.user.currentValue.userId;
+    this.getPostsData(userId);
+  }
+
+  getPostsData(userId: number) {
+    const cachedPosts = this.postService.cachedPosts$.value;
+    if (cachedPosts[userId]) {
+      this.posts = cachedPosts[userId];
+      return;
+    }
     this.getPosts(userId);
   }
 
@@ -35,6 +44,11 @@ export class PostsComponent implements OnChanges {
     this.isPostsLoading = true;
     this.postService.getPosts(userId).subscribe({
       next: (res) => {
+        const cachedPosts = this.postService.cachedPosts$.value;
+        this.postService.cachedPosts$.next({
+          ...cachedPosts,
+          [userId]: res,
+        });
         this.posts = res;
         this.isPostsLoading = false;
       },
@@ -45,6 +59,10 @@ export class PostsComponent implements OnChanges {
   }
 
   loadComments(postId: number) {
-    this.selectedPostId = postId;
+    if (this.selectedPostId.some((pi) => pi === postId)) {
+      this.selectedPostId = this.selectedPostId.filter((pi) => pi !== postId);
+      return;
+    }
+    this.selectedPostId.push(postId);
   }
 }

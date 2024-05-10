@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Post } from '../../../models/post.model';
 import { environment } from '../../../../environments/environment';
 
@@ -8,6 +8,8 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class PostService {
+  cachedPosts$:BehaviorSubject<{[userId:number]:Post[]}> = new BehaviorSubject({});
+
   private url: string = 'posts';
 
   constructor(private http: HttpClient) {}

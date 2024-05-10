@@ -21,9 +21,19 @@ export class CommentsComponent {
   constructor(private commentService: CommentService) {}
 
   getComments(postId: number) {
+    const cachedComment = this.commentService.cachedComments$.value;
+    if (cachedComment[postId]) {
+      this.commentsData = cachedComment[postId];
+      return;
+    }
+
     this.isCommentLoading = true;
     this.commentService.getComments(postId).subscribe({
       next: (res) => {
+        this.commentService.cachedComments$.next({
+          ...cachedComment,
+          [postId]: res,
+        });
         this.isCommentLoading = false;
         this.commentsData = res;
       },

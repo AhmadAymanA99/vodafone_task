@@ -17,7 +17,12 @@
   </nav>
 
   @if (selectedUser) {
-  <app-posts class="posts" [user]="selectedUser"></app-posts>
+  <app-posts [user]="selectedUser"></app-posts>
+  } @else {
+  <div class="empty">
+    <h3>Welcome!</h3>
+    <p class="mt-4">Select a user to start</p>
+  </div>
   }
 </div>
 }

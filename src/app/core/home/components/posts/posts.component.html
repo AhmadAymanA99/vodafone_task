@@ -14,8 +14,10 @@
     <div class="footer">
       <button class="comments" (click)="loadComments(post.id)">comments</button>
     </div>
-    @if (selectedPostId === post.id) {
-    <app-comments [postId]="selectedPostId"></app-comments>
+    @for (postId of selectedPostId; track postId) {
+      @if (postId === post.id) {
+      <app-comments [postId]="postId"></app-comments>
+      }
     }
   </div>
   }
