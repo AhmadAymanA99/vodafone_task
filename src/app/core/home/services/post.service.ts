@@ -5,16 +5,19 @@ import { Post } from '../../../models/post.model';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PostService {
-  cachedPosts$:BehaviorSubject<{[userId:number]:Post[]}> = new BehaviorSubject({});
+  cachedPosts$: BehaviorSubject<{ [userId: number]: Post[] }> =
+    new BehaviorSubject({});
 
   private url: string = 'posts';
 
   constructor(private http: HttpClient) {}
 
-  getPosts(userId:number): Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.baseUrl}/${this.url}?userId=${userId}`);
+  getPosts(userId: number): Observable<Post[]> {
+    return this.http.get<Post[]>(
+      `${environment.baseUrl}/${this.url}?userId=${userId}`
+    );
   }
 }

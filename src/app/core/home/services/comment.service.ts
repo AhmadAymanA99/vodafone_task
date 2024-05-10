@@ -5,16 +5,19 @@ import { environment } from '../../../../environments/environment';
 import { Comment } from '../../../models/comment.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CommentService {
-  cachedComments$:BehaviorSubject<{[userId:number]:Comment[]}> = new BehaviorSubject({});
+  cachedComments$: BehaviorSubject<{ [userId: number]: Comment[] }> =
+    new BehaviorSubject({});
 
   private url: string = 'comments';
 
   constructor(private http: HttpClient) {}
 
-  getComments(postId:number): Observable<Comment[]> {
-    return this.http.get<Comment[]>(`${environment.baseUrl}/${this.url}?postId=${postId}`);
+  getComments(postId: number): Observable<Comment[]> {
+    return this.http.get<Comment[]>(
+      `${environment.baseUrl}/${this.url}?postId=${postId}`
+    );
   }
 }

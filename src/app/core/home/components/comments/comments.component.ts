@@ -26,7 +26,6 @@ export class CommentsComponent {
       this.commentsData = cachedComment[postId];
       return;
     }
-
     this.isCommentLoading = true;
     this.commentService.getComments(postId).subscribe({
       next: (res) => {
