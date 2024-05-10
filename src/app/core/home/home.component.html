@@ -3,7 +3,9 @@
 } @else if (users) {
 <div>
   <nav>
-    <button class="user-button hidden">👨🏽‍💼</button>
+    <button class="user-button hidden">
+      <span class="pl-2">☰ Users</span>
+    </button>
     @for (user of users; track user) {
     <button
       class="user-button"
