@@ -2,19 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from './services/user.service';
 import { User } from '../../models/user.model';
 import { PostsComponent } from './components/posts/posts.component';
+import { LoadingSpinnerComponent } from '../../common/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [PostsComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
+  imports: [PostsComponent, LoadingSpinnerComponent],
 })
 export class HomeComponent implements OnInit {
   users: User[] = [];
   isPostsLoading: boolean = false;
   userImage: string =
-    'https://images.unsplash.com/photo-1714547509046-0cf60126f331?q=80&w=3864&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+    'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=3648&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
   isUserLoading: boolean = false;
   selectedUser!: {
     userId: number;
@@ -49,7 +50,11 @@ export class HomeComponent implements OnInit {
     };
   }
 
-  triggerPostsLoading (loading:boolean){
+  triggerPostsLoading(loading: boolean) {
     this.isPostsLoading = loading;
+  }
+
+  isActive(userId: number): boolean {
+    return this.selectedUser?.userId === userId;
   }
 }

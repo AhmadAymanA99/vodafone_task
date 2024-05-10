@@ -1,12 +1,23 @@
-<nav class="nav">
-  @if (users) {
-  <div>
+@if (isUserLoading) {
+<app-loading-spinner></app-loading-spinner>
+} @else if (users) {
+<div>
+  <nav>
+    <button class="user-button hidden">👨🏽‍💼</button>
     @for (user of users; track user) {
-    <button (click)="loadPosts(user.id,user.username)">{{ user.username }}</button>
+    <button
+      class="user-button"
+      [class.active]="isActive(user.id)"
+      (click)="loadPosts(user.id, user.username)"
+    >
+      <span>{{ user.username }}</span>
+      <span>></span>
+    </button>
     }
-  </div>
+  </nav>
 
   @if (selectedUser) {
-  <app-posts [user]="selectedUser"></app-posts>
-  } } @if (isUserLoading) { loading.... }
-</nav>
+  <app-posts class="posts" [user]="selectedUser"></app-posts>
+  }
+</div>
+}

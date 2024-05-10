@@ -1,11 +1,13 @@
 <div>
-  @if(isCommentLoading){ loading.... }
-  @else if (commentsData) { @for (comment of commentsData; track comment) {
-  <div>
-   <p>{{comment.body}}</p>
+  @if(isCommentLoading){ <app-loading-spinner></app-loading-spinner> } @else if
+  (commentsData) {
+  <div class="comments">
+    @for (comment of commentsData; track comment) {
+    <div class="comment">
+      <h6>{{ comment.email }}</h6>
+      <small>{{ comment.body }}</small>
+    </div>
+    }
   </div>
   }
-}
 </div>
-
-
